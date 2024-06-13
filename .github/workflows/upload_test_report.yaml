@@ -1,8 +1,8 @@
 name: report test results
 
 on:
-    pull_request:
-      branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -20,6 +20,15 @@ jobs:
         with:
           name: All Test Results
           path: ${{ github.workspace }}/test_report_combined.json
+          reporter: flutter-json
+          only-summary: true
+          token: ${{ github.token }}
+          fail-on-error: false
+      - name: Create Test Reporter Summary
+        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5 # v1.9.1
+        with:
+          name: Failed to compile test
+          path: ${{ github.workspace }}/test_result_3.json
           reporter: flutter-json
           only-summary: true
           token: ${{ github.token }}
